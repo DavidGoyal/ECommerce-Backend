@@ -15,7 +15,7 @@ process.on("uncaughtException",(err)=>{
 
 const pathFile=path.join(__dirname, "/config/config.env")
 
-dotenv.config({path:pathFile})
+dotenv.config({path:".env"})
 
 
 connectDB();

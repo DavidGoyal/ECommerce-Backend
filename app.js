@@ -5,12 +5,17 @@ const cookieParser=require("cookie-parser")
 const bodyParser=require("body-parser")
 const fileUpload=require("express-fileupload")
 const path=require("path")
+const cors=require("cors")
 
 const midddleware=require("./middleware/error")
 
-const pathFile=path.join(__dirname, "/config/config.env")
 
-dotenv.config({path:pathFile})
+dotenv.config({path:".env"})
+
+app.use(cors({
+    origin:[process.env.FRONTEND_URL],
+    credentials:true
+}))
 
 const productRouter=require("./routes/productRoute")
 const userRouter=require("./routes/userRoute")
@@ -28,12 +33,6 @@ app.use("/api/v1", userRouter);
 app.use("/api/v1",orderRouter);
 app.use("/api/v1",paymentRouter)
 
-
-app.use(express.static(path.join(__dirname,"../frontend/dist")))
-
-app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"))
-})
 
 
 app.use(midddleware);
